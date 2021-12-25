@@ -58,6 +58,7 @@
     service:
       name: apache2
       state: started
+      enabled: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install apache and php for CentOS servers
@@ -75,6 +76,7 @@
     service:
       name: httpd
       state: started
+      enabled: yes
     when: ansible_distribution == "CentOS"
 
   - name: copy default html file for site

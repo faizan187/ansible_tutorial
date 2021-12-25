@@ -19,6 +19,26 @@
     when: ansible_distribution == "Ubuntu"
 
 
+- hosts: workstations
+  become: true
+  tasks:
+  
+  - name: install unzip
+    package:
+      name: unzip
+
+
+  - name: install teraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.1.2/terraform_1.1.2_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
+
+
+
 - hosts: web_servers
   become: true
   tasks: 
@@ -33,6 +53,13 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
+  - name: start apache2 (ubuntu)
+    tags: apache,apache2,ubuntu
+    service:
+      name: apache2
+      state: started
+    when: ansible_distribution == "Ubuntu"
+
   - name: install apache and php for CentOS servers
     tags: apache, httpd, centos
     dnf:
@@ -43,6 +70,12 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
+  - name: start httpd (centos)
+    tags: apache,httpd,centos
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "CentOS"
 
   - name: copy default html file for site
     tags: apache,apache2,httpd

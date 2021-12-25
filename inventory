@@ -1,7 +1,12 @@
 [web_servers]
 server1
 server2
+
 [db_servers]
 server3
+
 [file_servers]
+server3
+
+[workstations]
 server3
